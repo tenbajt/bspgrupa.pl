@@ -4,7 +4,7 @@ import Styled from "styled-components";
 import Section from "../tenbajt/components/Section";
 import Background from "../tenbajt/components/Background";
 import GlobalStyles from "../tenbajt/GlobalStyles";
-import { color } from "../tenbajt/Utils";
+import { breakpoint, color } from "../tenbajt/Utils";
 
 
 const data = {
@@ -43,15 +43,29 @@ const data = {
 
 const Grid = Styled.div`
     gap: 0.125rem;
-    height: 100%;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    min-height: 100%;
+
+    ${breakpoint.sm} {
+        grid-template-columns: repeat(2, 1fr);
+    }
+`;
+
+const Item = Styled.div`
+    position: relative;
+    padding-bottom: 100%;
+
+    ${breakpoint.sm} {
+        padding-bottom: 0;
+    }
 `;
 
 const ItemLink = Styled.a`
+    inset: 0;
     width: 100%;
     height: 100%;
     display: grid;
+    position: absolute;
     align-content: center;
     justify-content: center;
     transition: background-color 200ms;
@@ -59,13 +73,17 @@ const ItemLink = Styled.a`
     &:hover {
         background-color: ${color.black(0.5)};
     }
+
+    ${breakpoint.sm} {
+        position: static;
+    }
 `;
 
 const ItemLogoContainer = Styled.div`
     width: 7rem;
     height: 7rem;
     position: relative;
-    transform: scale(0.9);
+    transform: scale(0.95);
     transition: transform 200ms;
 
     ${ItemLink}:hover & {
@@ -109,14 +127,14 @@ const HomePage = () => (
         <main>
             <Grid>
                 {data.links.map((link) => (
-                    <div style={{background: `url(${link.backgroundUrl}) center/cover no-repeat`}}>
+                    <Item style={{background: `url(${link.backgroundUrl}) center/cover no-repeat`}}>
                         <ItemLink href={link.url}>
                             <ItemLogoContainer>
                                 <ItemLogoRing color={link.color}/>
                                 <ItemLogo src={link.logoSrc} alt={link.logoAlt}/>
                             </ItemLogoContainer>
                         </ItemLink>
-                    </div>
+                    </Item>
                 ))}
             </Grid>
             <Footer>
