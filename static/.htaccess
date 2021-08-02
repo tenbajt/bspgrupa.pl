@@ -1,0 +1,5 @@
+# Przekierowanie SSL  #
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Koniec przekierowania SSL #
